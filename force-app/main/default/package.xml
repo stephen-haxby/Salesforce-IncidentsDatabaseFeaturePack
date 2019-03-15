@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ContactFlowTest</members>
+        <members>ContactHandler</members>
+        <members>ContactHandlerTest</members>
+        <members>ContactsSelector</members>
+        <members>ContactsSelectorTest</members>
+        <members>OpportunityHandler</members>
+        <members>OpportunityHandlerTest</members>
+        <members>OpportunityLineItemsSelector</members>
+        <members>OpportunityLineItemsSelectorTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>OpportunityLineItemTrigger</members>
+        <members>OpportunityTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+    <version>42.0</version>
+</Package>
