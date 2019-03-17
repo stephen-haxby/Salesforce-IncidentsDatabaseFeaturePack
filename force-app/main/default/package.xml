@@ -13,6 +13,7 @@
         <name>ApexClass</name>
     </types>
     <types>
+        <members>OpportunityLineItemTrigger</members>
         <members>OpportunityTrigger</members>
         <name>ApexTrigger</name>
     </types>

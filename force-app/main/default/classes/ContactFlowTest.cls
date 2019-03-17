@@ -37,7 +37,6 @@ private with sharing class ContactFlowTest {
 		//WHEN 
 		//flow will trigger when the new lines are inserted.  
 		insert oppLinesC1; 
-		update oppC1;
 		Test.stopTest(); 
 		//THEN 
 		//now assert the outcomes are as expected 
@@ -76,7 +75,6 @@ private with sharing class ContactFlowTest {
 		Test.startTest();
 		
 		insert oppLinesC1; 
-		update oppC1;
 		Test.stopTest(); 
 
 		List<Contact> updatedContacts = [SELECT Lifetime_Value__c, Number_Of_Trips__c FROM Contact WHERE Id = :contacts[0].Id]; 
@@ -87,7 +85,7 @@ private with sharing class ContactFlowTest {
 		//Because this trip is a single supp shouldn't be aggregated with the other values. 
 		List<Contact> otherContacts = [SELECT Lifetime_Value__c, Number_Of_Trips__c FROM Contact WHERE Id = :contacts[1].Id]; 
 		system.assert(!otherContacts.isEmpty()); 
-		system.assertEquals(null, otherContacts[0].Lifetime_Value__c); 
-		system.assertEquals(null, otherContacts[0].Number_Of_Trips__c); 
+		system.assertEquals(0, otherContacts[0].Lifetime_Value__c); 
+		system.assertEquals(0, otherContacts[0].Number_Of_Trips__c); 
 	}
 }

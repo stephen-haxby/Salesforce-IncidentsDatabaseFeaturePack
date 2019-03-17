@@ -56,22 +56,11 @@ public class OpportunityLineItemsSelector extends fflib_SObjectSelector {
 				OpportunityLineItem.Id, 
 				OpportunityLineItem.Traveller__c,
 				OpportunityLineItem.TotalPrice,
-				OpportunityLineItem.BDM_Stage__c
+				OpportunityLineItem.BDM_Stage__c,
+				OpportunityLineItem.BDM_Component_Type__c,
+				OpportunityLineItem.BDM_Product_Sub_Type_Name__c
 			})
 			.setCondition('Traveller__c IN :contactIdSet')
-			.toSOQL());
-	}
-
-	public List<OpportunityLineItem> selectTripsForOpportunityIds(Set<Id> opportunityIds){
-		return (List<OpportunityLineItem>)  Database.query(newQueryFactory()
-			.selectFields(new Set<Schema.SObjectField> {
-				OpportunityLineItem.OpportunityId,
-				OpportunityLineItem.Id, 
-				OpportunityLineItem.Traveller__c,
-				OpportunityLineItem.TotalPrice,
-				OpportunityLineItem.BDM_Stage__c
-			})
-			.setCondition('OpportunityId IN :opportunityIds AND BDM_Component_Type__c = \'Trip\' AND BDM_Product_Sub_Type_Name__c != \'Single Supplement\'')
 			.toSOQL());
 	}
 }

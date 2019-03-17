@@ -598,18 +598,7 @@ public class ContactHandler {
         }
     }
 
-    public static void updateContactTotalTripsAndSalePrice(List<Opportunity> opportunities){
-        Set<Id> opportunityIds = new Set<Id>();
-        for (Opportunity opp: opportunities) {
-            opportunityIds.add(opp.Id);
-        }
-
-        OpportunityLineItemsSelector lineItemSelector = new OpportunityLineItemsSelector();
-
-        //Find line items for each opportunity
-        List<OpportunityLineItem> opportunityLineItems = 
-            lineItemSelector.selectTripsForOpportunityIds(opportunityIds);
-
+    public static void updateContactTotalTripsAndSalePrice(List<OpportunityLineItem> opportunityLineItems){
         //Find unique Contacts
         Set<Id> contactIds = new Set<Id>();
         for (OpportunityLineItem lineItem : OpportunityLineItems) {
@@ -617,6 +606,8 @@ public class ContactHandler {
                contactIds.add(lineItem.Traveller__c);
            }
         }
+
+        OpportunityLineItemsSelector lineItemSelector = new OpportunityLineItemsSelector();
 
         //Find all line items for contacts
         List<OpportunityLineItem> contactLineItems = 
@@ -639,6 +630,8 @@ public class ContactHandler {
 
         for (OpportunityLineItem lineItem : lineItems) {
             if(lineItem.Traveller__c == contactId
+                && lineItem.BDM_Component_Type__c == 'Trip'
+                && lineItem.BDM_Product_Sub_Type_Name__c != 'Single Supplement'
                 && (lineItem.BDM_Stage__c == 'Confirmed'
                     || lineItem.BDM_Stage__c == 'FullyPaid'
                     || lineItem.BDM_Stage__c == 'Ticketed')){
@@ -657,7 +650,7 @@ public class ContactHandler {
 
         public ContactTripTotalHelper(Id contactId){
             this.contactId = contactId;
-            tripCount = 1;
+            tripCount = 0;
             totalSalePrice = 0;
         }
 

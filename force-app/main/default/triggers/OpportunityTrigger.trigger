@@ -24,10 +24,6 @@ trigger OpportunityTrigger on Opportunity (after update, after insert, before in
         	if(trigger.isUpdate){
             //	OpportunityHandler.afterInsertAndUpdateEvents(trigger.oldMap, trigger.new);
         	}
-
-			if(trigger.isUpdate || trigger.isInsert){
-				ContactHandler.updateContactTotalTripsAndSalePrice(trigger.new);
-			}
     	}
     }
 }
