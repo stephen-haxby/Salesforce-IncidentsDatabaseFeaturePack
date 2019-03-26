@@ -85,7 +85,7 @@ private with sharing class ContactFlowTest {
 		//Because this trip is a single supp shouldn't be aggregated with the other values. 
 		List<Contact> otherContacts = [SELECT Lifetime_Value__c, Number_Of_Trips__c FROM Contact WHERE Id = :contacts[1].Id]; 
 		system.assert(!otherContacts.isEmpty()); 
-		system.assertEquals(0, otherContacts[0].Lifetime_Value__c); 
-		system.assertEquals(0, otherContacts[0].Number_Of_Trips__c); 
+		system.assert(otherContacts[0].Lifetime_Value__c == NULL || otherContacts[0].Lifetime_Value__c == 0); 
+		system.assert(otherContacts[0].Number_Of_Trips__c == NULL || otherContacts[0].Number_Of_Trips__c == 0); 
 	}
 }

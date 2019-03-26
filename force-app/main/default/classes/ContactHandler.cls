@@ -598,13 +598,25 @@ public class ContactHandler {
         }
     }
 
-    public static void updateContactTotalTripsAndSalePrice(List<OpportunityLineItem> opportunityLineItems){
+    //TO REPLACE THE OLD 'Update Traveller (Contact) Amounts' Process and 'Contact Update Opp Line Amounts' Flow
+    public static void updateContactTotalTripsAndSalePrice(Map<Id, OpportunityLineItem> oldOpportunityLineItems, List<OpportunityLineItem> opportunityLineItems){
         //Find unique Contacts
         Set<Id> contactIds = new Set<Id>();
         for (OpportunityLineItem lineItem : OpportunityLineItems) {
-           if(!contactIds.contains(lineItem.Traveller__c)){
-               contactIds.add(lineItem.Traveller__c);
-           }
+            OpportunityLineItem oldOpportunityLineItem = 
+                (oldOpportunityLineItems != null) ? oldOpportunityLineItems.get(lineItem.Id) : null;
+
+            //If item status or price has changed
+            if(oldOpportunityLineItem == null
+                || oldOpportunityLineItem.BDM_Stage__c != lineItem.BDM_Stage__c
+                || oldOpportunityLineItem.TotalPrice != lineItem.TotalPrice){
+            
+                    //If the contact hasn't already been added to our list of id's to update
+                    if(!contactIds.contains(lineItem.Traveller__c)
+                        && lineItem.Traveller__c != NULL){
+                        contactIds.add(lineItem.Traveller__c);
+                    }
+                }
         }
 
         OpportunityLineItemsSelector lineItemSelector = new OpportunityLineItemsSelector();

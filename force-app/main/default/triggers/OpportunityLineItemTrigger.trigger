@@ -28,7 +28,7 @@ trigger OpportunityLineItemTrigger on OpportunityLineItem (before insert, before
 	        }
 	        
 			if(trigger.isInsert || trigger.isUpdate){
-				ContactHandler.updateContactTotalTripsAndSalePrice(trigger.new);
+				ContactHandler.updateContactTotalTripsAndSalePrice(trigger.oldMap, trigger.new);
 			}
 
 	        if (trigger.isDelete) {
